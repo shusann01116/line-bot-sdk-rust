@@ -246,7 +246,7 @@ pub trait MessagingApiApi {
     fn reply_message(
         &self,
         reply_message_request: crate::models::ReplyMessageRequest,
-    ) -> Pin<Box<dyn Future<Output = Result<crate::models::ReplyMessageResponse, Error>>>>;
+    ) -> Pin<Box<dyn Future<Output = Result<crate::models::ReplyMessageResponse, Error>> + Send>>;
     fn rich_menu_batch(
         &self,
         rich_menu_batch_request: crate::models::RichMenuBatchRequest,
@@ -1034,7 +1034,8 @@ where
     fn reply_message(
         &self,
         reply_message_request: crate::models::ReplyMessageRequest,
-    ) -> Pin<Box<dyn Future<Output = Result<crate::models::ReplyMessageResponse, Error>>>> {
+    ) -> Pin<Box<dyn Future<Output = Result<crate::models::ReplyMessageResponse, Error>> + Send>>
+    {
         let mut req = __internal_request::Request::new(
             hyper::Method::POST,
             "/v2/bot/message/reply".to_string(),
